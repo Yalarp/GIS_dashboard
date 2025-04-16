@@ -25,7 +25,7 @@ import ShapeFileExtractor from "./sidebarOptions/ShapeFileExtractor";
 import KML from "./sidebarOptions/KML";
 import KMZ from "./sidebarOptions/KMZ";
 import TIF from "./sidebarOptions/Tif";
-import Welcome from "./Welcome";
+import Welcome from "./Welcome"; // Import the Welcome component
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -36,22 +36,6 @@ const Dashboard = () => {
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
-  };
-
-  // Define all sidebar options in one place
-  const sidebarOptions = [
-    { text: "Location", icon: <LocationOnIcon /> },
-    { text: "Shape File Extractor", icon: <FileDownloadIcon /> },
-    { text: "KML", icon: <LayersIcon /> },
-    { text: "KMZ", icon: <PublicIcon /> },
-    { text: "TIF", icon: <ImageIcon /> },  // Changed to ImageIcon for better representation
-  ];
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    if (isSmallScreen) {
-      setSidebarOpen(false);
-    }
   };
 
   const renderContent = () => {
@@ -67,7 +51,7 @@ const Dashboard = () => {
       case "TIF":
         return <TIF />;
       default:
-        return <Welcome />;
+        return <Welcome />; // Render the Welcome component
     }
   };
 
@@ -102,11 +86,17 @@ const Dashboard = () => {
 
           {/* Sidebar Options */}
           <List className="sidebar-options-list">
-            {sidebarOptions.map((item) => (
+            {[
+              { text: "Location", icon: <LocationOnIcon /> },
+              { text: "Shape File Extractor", icon: <FileDownloadIcon /> },
+              { text: "KML", icon: <LayersIcon /> },
+              { text: "KMZ", icon: <PublicIcon /> },
+              { text: "TIF", icon: <ImageIcon /> },
+            ].map((item) => (
               <ListItem
                 button
                 key={item.text}
-                onClick={() => handleOptionClick(item.text)}
+                onClick={() => setSelectedOption(item.text)}
                 className={`sidebar-option-item ${
                   selectedOption === item.text ? "selected" : ""
                 }`}
@@ -114,7 +104,7 @@ const Dashboard = () => {
                 <ListItemIcon className="sidebar-option-icon">
                   {item.icon}
                 </ListItemIcon>
-                <Typography>{item.text}</Typography>
+                {isSidebarOpen && <Typography>{item.text}</Typography>}
               </ListItem>
             ))}
           </List>
@@ -125,26 +115,26 @@ const Dashboard = () => {
 
       {/* Floating Icons when Sidebar is Closed */}
       {!isSidebarOpen && (
-        <>
-          {/* Invisible hover trigger area */}
-          <Box className="floating-icons-trigger" />
-          
-          {/* Actual floating icons */}
-          <Box className="floating-icons-container">
-            {sidebarOptions.map((item) => (
-              <Tooltip key={item.text} title={item.text} placement="right">
-                <IconButton
-                  onClick={() => handleOptionClick(item.text)}
-                  className={`floating-icon-button ${
-                    selectedOption === item.text ? "selected" : ""
-                  }`}
-                >
-                  {item.icon}
-                </IconButton>
-              </Tooltip>
-            ))}
-          </Box>
-        </>
+        <Box className="floating-icons-container">
+          {[
+            { text: "Location", icon: <LocationOnIcon /> },
+            { text: "Shape File Extractor", icon: <FileDownloadIcon /> },
+            { text: "KML", icon: <LayersIcon /> },
+            { text: "KMZ", icon: <PublicIcon /> },
+            { text: "TIF", icon: <ImageIcon /> },
+          ].map((item) => (
+            <Tooltip key={item.text} title={item.text} placement="right">
+              <IconButton
+                onClick={() => setSelectedOption(item.text)}
+                className={`floating-icon-button ${
+                  selectedOption === item.text ? "selected" : ""
+                }`}
+              >
+                {item.icon}
+              </IconButton>
+            </Tooltip>
+          ))}
+        </Box>
       )}
 
       {/* Main Content */}

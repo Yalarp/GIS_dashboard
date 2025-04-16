@@ -58,7 +58,7 @@ const KML = () => {
 
   return (
     <ErrorBoundary>
-      <div style={{ marginTop: '13vh', padding: '20px' }}>
+      <div style={{ padding: '20px' }}>
         <h1>KML File Uploader and Map Viewer</h1>
 
         {/* Styled file upload area */}
@@ -91,27 +91,9 @@ const KML = () => {
           </div>
         </div>
 
-        {/* Download button */}
-        {drawnItemsRef.current && (
-          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <button
-              onClick={handleDownloadKML}
-              style={{
-                backgroundColor: '#4CAF50',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: '5px',
-                border: 'none',
-                cursor: 'pointer',
-                fontWeight: 'bold'
-              }}
-            >
-              Download KML
-            </button>
-          </div>
-        )}
+      
 
-        <div style={{ marginTop: '20px', height: '500px' }}>
+        <div style={{ height: '72vh' }}>
           <MapComponent
             kmlData={kmlData}
             imageUrl={imageUrl}
